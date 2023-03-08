@@ -173,7 +173,7 @@ export default function Home({ navigation }) {
             fontFamily: fonts.secondary[600],
             color: colors.white,
             fontSize: windowWidth / 15,
-          }}>SCAN BARCODE</Text>
+          }}>MULAI SCAN BARCODE</Text>
         </TouchableOpacity>
 
 

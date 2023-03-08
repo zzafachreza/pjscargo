@@ -25,7 +25,7 @@ export default function Riwayat({ navigation }) {
     useEffect(() => {
 
         if (isFocused) {
-            __getTransaction
+            __getTransaction()
         }
 
 
@@ -33,7 +33,6 @@ export default function Riwayat({ navigation }) {
 
     const __getTransaction = () => {
         axios.post(apiURL + 'hasil').then(res => {
-            console.log(res.data);
             setData(res.data);
         })
     }
@@ -128,6 +127,7 @@ export default function Riwayat({ navigation }) {
             backgroundColor: colors.zavalabs,
             padding: 10,
         }}>
+
             <FlatList showsVerticalScrollIndicator={false} data={data} renderItem={__renderItem} />
         </SafeAreaView>
     )

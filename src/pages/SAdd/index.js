@@ -22,7 +22,7 @@ export default function SAdd({ navigation, route }) {
         barcode: route.params.barcode,
         tujuan: '20/GR',
         jenis: 'PART',
-        jumlah: '',
+        jumlah: '1',
 
 
     });
@@ -45,7 +45,7 @@ export default function SAdd({ navigation, route }) {
                 setLoading(false);
                 if (res.data.status == 200) {
                     Alert.alert(MYAPP, 'Data berhasil di simpan !');
-                    // navigation.goBack();
+                    navigation.goBack();
                 } else {
                     showMessage({
                         type: 'danger',
@@ -105,10 +105,33 @@ export default function SAdd({ navigation, route }) {
                     { label: 'PART', value: 'PART', },
                     { label: 'OLI', value: 'OLI', },
                     { label: 'BATERAI', value: 'BATERAI', },
+                    { label: 'ATAP', value: 'ATAP' },
+                    { label: 'BOX BESAR', value: 'BOX BESAR' },
+                    { label: 'BOX SEDANG', value: 'BOX SEDANG' },
+                    { label: 'KOTAK KECIL', value: 'KOTAK KECIL' },
+                    { label: 'BUMPER', value: 'BUMPER' },
+                    { label: 'KURSI', value: 'KURSI' },
+                    { label: 'VELG', value: 'VELG' },
+                    { label: 'FENDER', value: 'FENDER' },
+                    { label: 'SUPPORT ( KECIL)', value: 'SUPPORT ( KECIL)' },
+                    { label: 'KAP MESIN', value: 'KAP MESIN' },
+                    { label: 'PANEL', value: 'PANEL' },
+                    { label: 'PINTU', value: 'PINTU' },
+                    { label: 'KACA BESAR', value: 'KACA BESAR' },
+                    { label: 'KACA KEGIL', value: 'KACA KEGIL' },
+                    { label: 'PATKIT', value: 'PATKIT' },
+                    { label: 'LAMPU', value: 'LAMPU' },
+                    { label: 'KROS MEMBER', value: 'KROS MEMBER' },
+                    { label: 'RADIATOR', value: 'RADIATOR' },
+                    { label: 'GRILL', value: 'GRILL' },
+                    { label: 'LINES', value: 'LINES' },
+                    { label: 'PER', value: 'PER' },
+                    { label: 'STERING', value: 'STERING' },
+                    { label: 'DLL', value: 'DLL' },
 
                 ]} />
                 <MyGap jarak={10} />
-                <MyInput label="Jumlah Barang" placeholder="Masukan jumlah barang" keyboardType="number-pad" iconname="apps" onChangeText={x => setKirim({ ...kirim, jumlah: x })} />
+                <MyInput autoFocus value={kirim.jumlah} label="Jumlah Barang" placeholder="Masukan jumlah barang" keyboardType="number-pad" iconname="apps" onChangeText={x => setKirim({ ...kirim, jumlah: x })} />
 
             </ScrollView>
 
