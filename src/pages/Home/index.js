@@ -149,18 +149,9 @@ export default function Home({ navigation }) {
           alignItems: 'center'
 
         }} onPress={() => {
-          ZavalabsScanner.showBarcodeReader(result => {
-            console.log('barcode : ', result);
-            console.log('suer : ', user.id);
 
-            if (result !== null) {
-              navigation.navigate('SAdd', {
-                barcode: result
-              })
-            }
+          navigation.navigate('Riwayat')
 
-
-          })
 
         }}>
           <Image style={{
@@ -173,7 +164,7 @@ export default function Home({ navigation }) {
             fontFamily: fonts.secondary[600],
             color: colors.white,
             fontSize: windowWidth / 15,
-          }}>MULAI SCAN BARCODE</Text>
+          }}>SCAN BARCODE</Text>
         </TouchableOpacity>
 
 
@@ -185,18 +176,18 @@ export default function Home({ navigation }) {
           justifyContent: 'center',
           alignItems: 'center'
 
-        }} onPress={() => navigation.navigate('Riwayat')}>
+        }} onPress={() => navigation.navigate('Riwayat2')}>
           <Image style={{
             width: windowWidth / 2.5,
             height: windowWidth / 2.5,
             resizeMode: 'contain'
-          }} source={require('../../assets/A6.png')} />
+          }} source={require('../../assets/A2.png')} />
 
           <Text style={{
             fontFamily: fonts.secondary[600],
             color: colors.primary,
             fontSize: windowWidth / 15,
-          }}>HASIL SCAN</Text>
+          }}>SCAN PACKING</Text>
         </TouchableOpacity>
 
 

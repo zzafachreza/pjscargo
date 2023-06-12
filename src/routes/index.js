@@ -39,6 +39,8 @@ import {
   Aktifitas,
   AktifitasLaporan,
   AktifitasDetail,
+  Riwayat2,
+  SAdd2,
 } from '../pages';
 import { colors } from '../utils';
 import { Icon } from 'react-native-elements';
@@ -79,6 +81,19 @@ export default function Router() {
             backgroundColor: colors.primary,
           },
           headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="SAdd2"
+        component={SAdd2}
+        options={{
+          headerShown: true,
+          headerTitle: 'SCAN BARCODE PACKING',
+          headerStyle: {
+            backgroundColor: colors.secondary,
+          },
+          headerTintColor: colors.black,
         }}
       />
 
@@ -124,11 +139,24 @@ export default function Router() {
         component={Riwayat}
         options={{
           headerShown: true,
-          headerTitle: 'Riwayat',
+          headerTitle: 'Riwayat Scan Barcode',
           headerStyle: {
             backgroundColor: colors.primary,
           },
           headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="Riwayat2"
+        component={Riwayat2}
+        options={{
+          headerShown: true,
+          headerTitle: 'Riwayat Scan Packing',
+          headerStyle: {
+            backgroundColor: colors.secondary,
+          },
+          headerTintColor: colors.black,
         }}
       />
 

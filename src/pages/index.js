@@ -35,10 +35,11 @@ import Aktifitas from './Aktifitas';
 import AktifitasAdd from './AktifitasAdd';
 import AktifitasLaporan from './AktifitasLaporan';
 import AktifitasDetail from './AktifitasDetail';
+import SAdd2 from './SAdd2';
+import Riwayat2 from './Riwayat2';
 
 
 // NEW
-
 
 
 
@@ -91,6 +92,10 @@ export {
   Aktifitas,
   AktifitasAdd,
   AktifitasLaporan,
-  AktifitasDetail
+  AktifitasDetail,
+
+  SAdd2,
+  Riwayat2
+
 
 };

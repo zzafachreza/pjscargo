@@ -15,34 +15,56 @@ import { maskJs, maskCurrency } from 'mask-js';
 import moment from 'moment';
 import ZavalabsScanner from 'react-native-zavalabs-scanner'
 import 'moment/locale/id';
-export default function SAdd({ navigation, route }) {
+export default function SAdd2({ navigation, route }) {
 
     const [loading, setLoading] = useState(false);
     const [manual, setManual] = useState(false);
 
     const [kirim, setKirim] = useState({
+        no_vanning: '',
         barcode: '',
         tujuan: '20/GR',
-        jenis: 'PART',
+        jenis: '',
         jumlah: '',
-
-
+        status: 'PENDING'
     });
 
 
 
     const sendServer = () => {
         console.log(kirim);
+        if (route.params !== undefined) {
+
+            axios.post(apiURL + 'hasil_delete2', {
+                id: route.params.id
+            }).then(res => {
+
+                __add();
+
+            })
+        } else {
+            __add();
+        }
 
 
+
+
+
+        // setLoading(true);
+
+
+    }
+
+
+    const __add = () => {
         if (kirim.jumlah.length == 0) {
             showMessage({
                 type: 'danger',
                 message: 'Jumlah barang masih kosong !'
             })
         } else {
-            setLoading(true);
-            axios.post(apiURL + 'hasil_add', kirim).then(res => {
+            // setLoading(true);
+            axios.post(apiURL + 'hasil_add2', kirim).then(res => {
                 console.log(res.data);
                 setLoading(false);
                 if (res.data.status == 200) {
@@ -56,23 +78,17 @@ export default function SAdd({ navigation, route }) {
                 }
             })
         }
-        // setLoading(true);
-
-
     }
 
     const [region, setRegion] = useState([]);
 
     useEffect(() => {
 
-        axios.post(apiURL + 'region').then(res => {
-            console.log(res.data);
-            setRegion(res.data);
-            setKirim({
-                ...kirim,
-                region: res.data[0].value
-            })
-        })
+        console.log(route.params)
+        if (route.params !== undefined) {
+            setKirim(route.params)
+
+        }
 
     }, [])
 
@@ -87,6 +103,31 @@ export default function SAdd({ navigation, route }) {
             <ScrollView showsVerticalScrollIndicator={false}>
 
 
+                <MyInput value={kirim.no_vanning} label="No. Vanning" placeholder="masukan no vanning" iconname="card" onChangeText={x => setKirim({ ...kirim, no_vanning: x })} />
+                <MyGap jarak={10} />
+
+                {!manual && <MyPicker iconname="location" onValueChange={x => {
+                    if (x == 'INPUT MANUAL') {
+                        setKirim({ ...kirim, tujuan: '' })
+                        setManual(true);
+                    } else {
+                        setKirim({ ...kirim, tujuan: x });
+                        setManual(false);
+                    }
+                }} label="Tujuan" data={[
+                    { label: '20/GR', value: '20/GR', },
+                    { label: '21/BP', value: '21/BP', },
+                    { label: '14/BA', value: '14/BA', },
+                    { label: '15/SKP', value: '15/SKP', },
+                    { label: 'OTO EXP', value: 'OTO EXP', },
+                    { label: 'TPI', value: 'TPI', },
+                    { label: 'TOKO BATAM', value: 'TOKO BATAM', },
+                    { label: 'INPUT MANUAL', value: 'INPUT MANUAL', },
+
+                ]} />}
+
+                {manual && <MyInput value={kirim.tujuan} label="Tujuan" placeholder="Tujuan" iconname="location" onChangeText={x => setKirim({ ...kirim, tujuan: x })} />}
+                <MyGap jarak={10} />
                 <View style={{
                     flexDirection: 'row'
                 }}>
@@ -130,62 +171,42 @@ export default function SAdd({ navigation, route }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <MyGap jarak={10} />
-                {!manual && <MyPicker iconname="location" onValueChange={x => {
-                    if (x == 'INPUT MANUAL') {
-                        setKirim({ ...kirim, tujuan: '' })
-                        setManual(true);
-                    } else {
-                        setKirim({ ...kirim, tujuan: x });
-                        setManual(false);
-                    }
-                }} label="Tujuan" data={[
-                    { label: '20/GR', value: '20/GR', },
-                    { label: '21/BP', value: '21/BP', },
-                    { label: '14/BA', value: '14/BA', },
-                    { label: '15/SKP', value: '15/SKP', },
-                    { label: 'OTO EXP', value: 'OTO EXP', },
-                    { label: 'TPI', value: 'TPI', },
-                    { label: 'TOKO BATAM', value: 'TOKO BATAM', },
-                    { label: 'INPUT MANUAL', value: 'INPUT MANUAL', },
 
-                ]} />}
 
-                {manual && <MyInput value={kirim.tujuan} label="Tujuan" placeholder="Tujuan" iconname="location" onChangeText={x => setKirim({ ...kirim, tujuan: x })} />}
 
                 <MyGap jarak={10} />
-                <MyPicker iconname="cube" onValueChange={x => setKirim({ ...kirim, jenis: x })} label="Jenis" data={[
-                    { label: 'PART', value: 'PART', },
-                    { label: 'OLI', value: 'OLI', },
-                    { label: 'BATERAI', value: 'BATERAI', },
-                    { label: 'ATAP', value: 'ATAP' },
-                    { label: 'BOX BESAR', value: 'BOX BESAR' },
-                    { label: 'BOX SEDANG', value: 'BOX SEDANG' },
-                    { label: 'KOTAK KECIL', value: 'KOTAK KECIL' },
-                    { label: 'BUMPER', value: 'BUMPER' },
-                    { label: 'KURSI', value: 'KURSI' },
-                    { label: 'VELG', value: 'VELG' },
-                    { label: 'FENDER', value: 'FENDER' },
-                    { label: 'SUPPORT ( KECIL)', value: 'SUPPORT ( KECIL)' },
-                    { label: 'KAP MESIN', value: 'KAP MESIN' },
-                    { label: 'PANEL', value: 'PANEL' },
-                    { label: 'PINTU', value: 'PINTU' },
-                    { label: 'KACA BESAR', value: 'KACA BESAR' },
-                    { label: 'KACA KEGIL', value: 'KACA KEGIL' },
-                    { label: 'PATKIT', value: 'PATKIT' },
-                    { label: 'LAMPU', value: 'LAMPU' },
-                    { label: 'KROS MEMBER', value: 'KROS MEMBER' },
-                    { label: 'RADIATOR', value: 'RADIATOR' },
-                    { label: 'GRILL', value: 'GRILL' },
-                    { label: 'LINES', value: 'LINES' },
-                    { label: 'PER', value: 'PER' },
-                    { label: 'STERING', value: 'STERING' },
-                    { label: 'DLL', value: 'DLL' },
-
-                ]} />
+                <MyInput value={kirim.jenis} label="Jenis Barang" placeholder="Masukan jenis barang" iconname="cube" onChangeText={x => setKirim({ ...kirim, jenis: x })} />
                 <MyGap jarak={10} />
                 <MyInput value={kirim.jumlah} label="Jumlah Barang" placeholder="Masukan jumlah barang" keyboardType="number-pad" iconname="apps" onChangeText={x => setKirim({ ...kirim, jumlah: x })} />
+                <MyGap jarak={10} />
+                <View style={{
+                    flexDirection: 'row',
+                    marginVertical: 10,
+                }}>
+                    <View style={{
+                        flex: 1,
+                        paddingRight: 5,
+                    }}>
+                        <MyButton onPress={() => {
+                            setKirim({
+                                ...kirim,
+                                status: 'PENDING'
+                            })
+                        }} title="PENDING" warna={kirim.status == 'PENDING' ? colors.primary : colors.white} colorText={kirim.status == 'PENDING' ? colors.white : colors.primary} borderSize={1} borderColor={colors.primary} />
+                    </View>
+                    <View style={{
+                        flex: 1,
+                        paddingLeft: 5,
 
+                    }}>
+                        <MyButton onPress={() => {
+                            setKirim({
+                                ...kirim,
+                                status: 'FINISH'
+                            })
+                        }} title="FINISH" warna={kirim.status == 'FINISH' ? colors.primary : colors.white} colorText={kirim.status == 'FINISH' ? colors.white : colors.primary} borderSize={1} borderColor={colors.primary} />
+                    </View>
+                </View>
             </ScrollView>
 
             <MyGap jarak={20} />

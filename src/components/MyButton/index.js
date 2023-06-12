@@ -23,7 +23,7 @@ export default function MyButton({
       <Icon type="ionicon" name={Icons} color={iconColor} size={windowWidth / 35} />
       <Text
         style={{
-          color: colors.white,
+          color: colorText,
           fontSize: windowWidth / 35,
           left: 5,
           fontSize: windowWidth / 28,

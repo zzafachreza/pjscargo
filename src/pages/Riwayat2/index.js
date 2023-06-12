@@ -16,7 +16,7 @@ import 'intl/locale-data/jsonp/en';
 import moment from 'moment';
 import 'moment/locale/id';
 
-export default function Riwayat({ navigation }) {
+export default function Riwayat2({ navigation }) {
 
     const isFocused = useIsFocused();
 
@@ -32,7 +32,7 @@ export default function Riwayat({ navigation }) {
     }, [isFocused]);
 
     const __getTransaction = () => {
-        axios.post(apiURL + 'hasil').then(res => {
+        axios.post(apiURL + 'hasil2').then(res => {
             setData(res.data);
         })
     }
@@ -57,8 +57,16 @@ export default function Riwayat({ navigation }) {
 
                         flexDirection: 'row'
                     }}>
-                        <Text style={{ flex: 1, fontFamily: fonts.secondary[600], color: colors.primary }}>{moment(item.tanggal).locale("id").format('dddd, LL')} Pukul {item.jam} WIB</Text>
+                        <Text style={{ flex: 1, fontFamily: fonts.secondary[600], color: colors.black }}>{moment(item.tanggal).locale("id").format('dddd, LL')} Pukul {item.jam} WIB</Text>
                     </View>
+                    <View style={{
+                        flexDirection: 'row'
+                    }}>
+                        <Text style={{ flex: 0.5, fontFamily: fonts.secondary[600] }}>No Vanning</Text>
+                        <Text style={{ flex: 0.1, }}>:</Text>
+                        <Text style={{ flex: 1, fontFamily: fonts.secondary[400] }}>{item.no_vanning}</Text>
+                    </View>
+
                     <View style={{
                         flexDirection: 'row'
                     }}>
@@ -88,7 +96,16 @@ export default function Riwayat({ navigation }) {
                         <Text style={{ flex: 1, fontFamily: fonts.secondary[400] }}>{item.jumlah}</Text>
                     </View>
 
+                    <View style={{
+                        flexDirection: 'row'
+                    }}>
+                        <Text style={{ flex: 0.5, fontFamily: fonts.secondary[600] }}>Status</Text>
+                        <Text style={{ flex: 0.1, }}>:</Text>
+                        <Text style={{ flex: 1, fontFamily: fonts.secondary[400] }}>{item.status}</Text>
+                    </View>
+
                 </View>
+
                 <TouchableOpacity onPress={() => {
                     Alert.alert(MYAPP, "Hapus barcode ini ?", [
                         {
@@ -98,7 +115,7 @@ export default function Riwayat({ navigation }) {
                         {
                             'text': 'HAPUS',
                             onPress: () => {
-                                axios.post(apiURL + 'hasil_delete', {
+                                axios.post(apiURL + 'hasil_delete2', {
                                     id: item.id
                                 }).then(res => {
                                     console.log(res.data);
@@ -116,6 +133,28 @@ export default function Riwayat({ navigation }) {
                 }}>
                     <Icon type='ionicon' name='trash' color={colors.white} size={15} />
                 </TouchableOpacity>
+                {item.status == 'PENDING' && <TouchableOpacity onPress={() => {
+                    Alert.alert(MYAPP, "Lanjutkan input ini ?", [
+                        {
+                            'text': 'TIDAK',
+                            'style': 'cancel'
+                        },
+                        {
+                            'text': 'LANJUT',
+                            onPress: () => {
+                                navigation.navigate('SAdd2', item)
+                            }
+                        }
+                    ])
+                }} style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 1,
+                    backgroundColor: colors.primary,
+                    padding: 20,
+                }}>
+                    <Icon type='ionicon' name='chevron-forward' color={colors.white} size={15} />
+                </TouchableOpacity>}
             </View>
         )
 
@@ -135,16 +174,16 @@ export default function Riwayat({ navigation }) {
                 bottom: 20,
                 right: 20,
             }}>
-                <TouchableOpacity onPress={() => navigation.navigate('SAdd')} style={{
+                <TouchableOpacity onPress={() => navigation.navigate('SAdd2')} style={{
                     width: 60,
                     height: 60,
                     elevation: 4,
-                    backgroundColor: colors.primary,
+                    backgroundColor: colors.secondary,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 30,
                 }}>
-                    <Icon color={colors.white} type='ionicon' name='add' size={30} />
+                    <Icon color={colors.black} type='ionicon' name='add' size={30} />
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
